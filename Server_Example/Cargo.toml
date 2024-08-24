@@ -1,0 +1,8 @@
+[package]
+name = "Server_Example"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rocket = { version = "0.5.1", features = ["tls"] }
+ws = { package = "rocket_ws", version = "0.1.1" }
