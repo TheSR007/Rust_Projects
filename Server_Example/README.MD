@@ -3,19 +3,22 @@
 ### Features
 - [X] HTTP(S)
 - [X] WebSocket
+- [X] Database(MongoDB)
 - [ ] UDP(Enet)
-- [ ] Database(MongoDB & sqlite3)
+
 
 ## Usage
 Navigate to the this directory and
 ```cmd
 cargo run
 ```
-build Directory Also has HTTP and HTTPS builds for Windows which runs on localhost 80 and 443 respectively
+build Directory Also has **HTTP and HTTPS builds** for **Windows** which runs on **localhost 80 and 443** respectively **(need manual setup for /db endpoint else you will get [ ])**
 <br>
 ### **Note** 
-When Running HTTPS you need **certs** folder which has **key.pem** and **cert.pem** to be in the same folder as the exe
-
+- Make Sure The **MongoDB** is Setup Correctly for **Localhost** and you Have a database Named **DatabaseName** and a collection named **CollectionName** and in documnets you have **id (int64) and content (string)**
+- You can change them and rebuild as you need, these are just placeholder and only requred if you wanna use the prebuilt binaries
+- Run The Prebuilds in [**Terminal**](https://www.microsoft.com/store/productId/9N0DX20HK701) for Better View
+- Also All the **Config of Server is in Rocket.toml** and Dependencies in Cargo.toml
 ## DOC
 * `/`
 	+ **GET**: "Server is running"
@@ -23,5 +26,7 @@ When Running HTTPS you need **certs** folder which has **key.pem** and **cert.pe
 * `/ws` (WebSocket)
 	+ **Messages**
 		- **ping**: Server will return a **pong**
+* `/db` (Database)
+	+ **GET**: Returns the MongoDB Database Documents (need to setup first)
 
 
