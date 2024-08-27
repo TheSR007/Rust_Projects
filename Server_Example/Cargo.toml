@@ -7,7 +7,7 @@ description = "Example Server Using Rocket which has HTTP(S), WebSocket, DB and 
 repository = "https://github.com/TheSR007/Rust_Projects/tree/master/Server_Example"
 documentation = "https://docs.rs/Server_Example/"
 readme = "README.MD"
-keywords = ["Server", "HTTP(S)", "WebSocket", "Enet", "MongoDB"]
+keywords = ["Server", "HTTP_S", "WebSocket", "Enet", "MongoDB"]
 license = "AGPL-3.0-only"
 exclude = [
     "build", # Prebuilds for github
