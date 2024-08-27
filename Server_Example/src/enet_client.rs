@@ -1,7 +1,7 @@
-use std::net::Ipv4Addr;
 use anyhow::Context;
 use enet::*;
 use rocket::tokio;
+use std::net::Ipv4Addr;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -15,10 +15,10 @@ async fn main() -> anyhow::Result<()> {
             BandwidthLimit::Unlimited,
         )
         .context("could not create host")?;
-    
+
     host.connect(&Address::new(Ipv4Addr::LOCALHOST, 1234), 10, 0)
         .context("connect failed")?;
-    
+
     let mut peer = loop {
         let e = host.service(1000).context("service failed")?;
         let e = match e {
@@ -53,7 +53,7 @@ async fn main() -> anyhow::Result<()> {
     loop {
         let e = host.service(1000).context("service failed")?;
         println!("received event: {:#?}", e);
-    
+
         match e {
             Some(Event::Disconnect(_, _)) => {
                 println!("Disconnected from server. Exiting...");
@@ -62,5 +62,4 @@ async fn main() -> anyhow::Result<()> {
             _ => tokio::task::yield_now().await,
         }
     }
-    
 }

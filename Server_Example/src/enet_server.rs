@@ -1,7 +1,7 @@
-use std::net::Ipv4Addr;
 use anyhow::Context;
 use enet::*;
 use rocket::tokio;
+use std::net::Ipv4Addr;
 use tokio::sync::mpsc;
 use tokio::time::Duration;
 
@@ -54,7 +54,7 @@ pub async fn run_enet_server(mut rx: mpsc::Receiver<EnetCommand>) -> anyhow::Res
                 }
             }
         }
-    }    
+    }
 
     Ok(())
 }

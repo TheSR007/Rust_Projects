@@ -1,13 +1,13 @@
-use rocket::{get, post, routes, tokio, State};
-use rocket_ws as ws;
-use rocket::serde::json::Json;
-use rocket::serde::{Serialize, Deserialize};
-use rocket_db_pools::Database;
-use rocket_db_pools::mongodb::Client;
 use rocket::futures::stream::TryStreamExt;
+use rocket::serde::json::Json;
+use rocket::serde::{Deserialize, Serialize};
+use rocket::{get, post, routes, tokio, State};
+use rocket_db_pools::mongodb::Client;
+use rocket_db_pools::Database;
+use rocket_ws as ws;
+use tokio::runtime::Runtime;
 use tokio::sync::mpsc as tokio_mpsc;
 use tokio::task;
-use tokio::runtime::Runtime;
 
 mod enet_server;
 
@@ -59,16 +59,15 @@ async fn get_db(db: &MongoDb) -> Json<Vec<Log>> {
 
     match collection.find(None, None).await {
         Ok(cursor) => {
-            match cursor.try_collect::<Vec<Log>>().await { // Make sure Document exist in the database Based on <Log> Struct
-                Ok(logs) => {
-                    Json(logs)
-                },
+            match cursor.try_collect::<Vec<Log>>().await {
+                // Make sure Document exist in the database Based on <Log> Struct
+                Ok(logs) => Json(logs),
                 Err(e) => {
                     eprintln!("Error collecting logs: {:?}", e);
                     Json(vec![])
                 }
             }
-        },
+        }
         Err(e) => {
             eprintln!("Error querying MongoDB: {:?}", e);
             Json(vec![])
@@ -77,7 +76,9 @@ async fn get_db(db: &MongoDb) -> Json<Vec<Log>> {
 }
 
 #[post("/shutdown")]
-async fn shutdown_enetserver(tx: &State<tokio_mpsc::Sender<enet_server::EnetCommand>>) -> &'static str {
+async fn shutdown_enetserver(
+    tx: &State<tokio_mpsc::Sender<enet_server::EnetCommand>>,
+) -> &'static str {
     if let Err(e) = tx.send(enet_server::EnetCommand::Shutdown).await {
         eprintln!("Failed to send shutdown command: {:?}", e);
     }
@@ -106,13 +107,24 @@ async fn main() -> Result<(), rocket::Error> {
     let rocket = rocket::build()
         .attach(MongoDb::init())
         .manage(tx)
-        .mount("/", routes![get_index, post_index, websocket, get_db, shutdown_enetserver])
+        .mount(
+            "/",
+            routes![
+                get_index,
+                post_index,
+                websocket,
+                get_db,
+                shutdown_enetserver
+            ],
+        )
         .ignite()
         .await?;
 
     rocket.launch().await?;
 
-    enet_server_handle.await.expect("Failed to join ENet server task");
+    enet_server_handle
+        .await
+        .expect("Failed to join ENet server task");
 
     Ok(())
 }

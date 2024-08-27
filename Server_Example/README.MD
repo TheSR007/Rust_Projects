@@ -43,4 +43,7 @@ build Directory Also has **HTTP and HTTPS builds** for **Windows** which runs on
 * `/shutdown` (UDP Server)
 	+ **POST**: **Shuts Down the Enet Server** which is running in a **Different Thread**
 
+### The documentation for this crate is available at [docs.rs](https://docs.rs/Server_Example/).
+
+
 
