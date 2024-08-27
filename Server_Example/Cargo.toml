@@ -7,3 +7,10 @@ edition = "2021"
 rocket = { version = "0.5.1", features = ["tls", "json"] }
 rocket_ws = "0.1.1"
 rocket_db_pools = { version = "0.2.0", features = ["mongodb"] }
+enet = "0.3.0"
+anyhow = "1.0.86"
+
+[[bin]]
+name = "enet_client"
+path = "src/enet_client.rs"
+

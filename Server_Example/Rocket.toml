@@ -1,7 +1,7 @@
 # All The Config That can be Set
 [default]
 address = "127.0.0.1"
-port = 443
+port = 80
 workers = 16
 max_blocking = 512
 keep_alive = 5
@@ -18,9 +18,9 @@ cli_colors = true
 # msgpack = "2 MiB"
 # "file/jpg" = "5 MiB"
 
-[default.tls]
-key = "certs/key.pem"
-certs = "certs/cert.pem"
+# [default.tls]
+# key = "certs/key.pem"
+# certs = "certs/cert.pem"
 
 # [default.shutdown]
 # ctrlc = true
