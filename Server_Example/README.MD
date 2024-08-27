@@ -1,11 +1,13 @@
 # Example Server
 ## Example Server in Rust Using Rocket
+
+### [Cargo Crate](https://crates.io/crates/Server_Example)
+
 ### Features
 - [X] HTTP(S)
 - [X] WebSocket
 - [X] Database(MongoDB)
 - [X] UDP(Enet)
-
 
 ## Usage
 Navigate to the this directory and
@@ -42,8 +44,6 @@ build Directory Also has **HTTP and HTTPS builds** for **Windows** which runs on
 	+ **GET**: Returns the MongoDB Database Documents (need to setup first)
 * `/shutdown` (UDP Server)
 	+ **POST**: **Shuts Down the Enet Server** which is running in a **Different Thread**
-
-### The documentation for this crate is available at [docs.rs](https://docs.rs/Server_Example/).
 
 
 
